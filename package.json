@@ -1,0 +1,24 @@
+{
+  "name": "supercharged",
+  "version": "1.0.0",
+  "description": "Natural language activity tracking with GPT-3",
+  "main": "index.ts",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kern/supercharged.git"
+  },
+  "author": "Alexander Kern <alex@kern.io>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/kern/supercharged/issues"
+  },
+  "homepage": "https://github.com/kern/supercharged#readme",
+  "devDependencies": {
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "luxon": "^1.24.1",
+    "node-fetch": "^2.6.0"
+  }
+}
