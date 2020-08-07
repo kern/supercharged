@@ -1,88 +1,10 @@
 import fetch from 'node-fetch'
 import DateTime from 'luxon'
-
-type GPT3Options = {
-  prompt?: string,
-  max_tokens?: number,
-  temperature?: number,
-  top_p?: number,
-  n?: number,
-  stream?: boolean,
-  logprobs?: number,
-  stop?: string,
-}
-
-type AirtableFoodActivity = {
-  "Activity Date": string,
-  "Description": string,
-  "Meal Type": string,
-  "Count": number,
-  "Size": string,
-  "Location": string,
-  "Tags": string,
-  "Attachment URL": string,
-  "Attachments": string,
-}
-
-type AirtableActivity = AirtableFoodActivity
-
-type AMPM = 'am' | 'pm'
-
-type ActivityTrainingData = [string, string][]
-
-const GPT3_ENDPOINT = "https://api.openai.com/v1/engines/davinci/completions"
-const GPT3_KEY = process.env.GPT3_API_KEY
-const GPT3_DEFAULT_OPTIONS: GPT3Options = {
-  max_tokens: 35,
-  temperature: 0,
-  top_p: 1,
-  n: 1,
-  stream: false,
-  logprobs: null,
-  stop: '\n\n'
-}
-
-const AIRTABLE_BASE = process.env.AIRTABLE_BASE
-const AIRTABLE_RESULTS_TABLE = process.env.AIRTABLE_RESULTS_TABLE
-const AIRTABLE_TRAINING_TABLE = process.env.AIRTABLE_TRAINING_TABLE
-const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY
+import { GPT3Options, AirtableFoodActivity, AirtableActivity, AMPM, ActivityTrainingData } from './types'
+import * as config from './config'
 
 const fetchTrainingData = (): ActivityTrainingData[] => {
   return [] // TODO
-}
-
-const prepareGPTOptions = (trainingData: ActivityTrainingData): GPT3Options[] {
-  const prompt = trainingData.map(r => {
-    return 'Q: ' + r.fields.Input + '\nA: ' + r.fields.Output
-  }).join('\n\n')
-  
-  const lines = parameters.body.split('\n').map(l => l.trim()).filter(l => l.length > 0)
-  
-  return lines.map(l => {
-    const p = prompt + '\n\nQ: ' + l + '\nA:'
-    return {
-      prompt: p,
-      ...gpt3Settings
-    }
-  })
-}
-
-const callGPT3 = async (opts: GPT3Options): Promise<async> => {
-  const res = await fetch(GPT3_ENDPOINT, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${GPT3_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(opts)
-  })
-
-  const body = await res.json()
-  if (!body || !body.choices || body.choices.length === 0) {
-    throw new Error('invalid GPT3 output')
-  }
-
-  return body.choices[0].text
 }
 
 const tokenizeGPT3Output = (rawOutput: string): Array<[string, string]> => {
@@ -168,18 +90,4 @@ const postProcessGPT3Output = (rawOutput: string): AirtableActivity[] => {
       "Attachments": attachments
     }
   ]
-}
-
-const sendToAirtable = async (activity: AirtableFoodActivity): Promise<void> => {
-  const url = 'https://api.airtable.com/v0/' + AIRTABLE_BASE + '/' + AIRTABLE_RESULTS_TABLE
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${AIRTABLE_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(activity)
-  })
-
-  await res.json()
 }

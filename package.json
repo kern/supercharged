@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Natural language activity tracking with GPT-3",
   "main": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kern/supercharged.git"
@@ -15,9 +17,15 @@
   },
   "homepage": "https://github.com/kern/supercharged#readme",
   "devDependencies": {
+    "@types/jest": "^26.0.9",
+    "jest": "^26.2.2",
+    "jest-fetch-mock": "^3.0.3",
+    "ts-jest": "^26.1.4",
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "env-var": "^6.3.0",
     "luxon": "^1.24.1",
     "node-fetch": "^2.6.0"
   }
