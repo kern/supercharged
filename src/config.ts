@@ -10,6 +10,10 @@ switch (process.env.NODE_ENV) {
     dotenv.config()
 }
 
+const app = {
+  timezone: get('ACTIVITY_TIMEZONE').default('America/Los_Angeles').asString()
+}
+
 const gpt3 = {
   endpoint: get('GPT3_ENDPOINT').default("https://api.openai.com/v1/engines/davinci/completions").asString(),
   apiKey: get('GPT3_KEY').required().asString(),
@@ -32,6 +36,7 @@ const airtable = {
 }
 
 export {
+  app,
   gpt3,
   airtable,
 }

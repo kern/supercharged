@@ -1,9 +1,7 @@
-import * as gpt3 from './gpt3'
-import * as config from './config'
 import fetchMock from 'jest-fetch-mock'
+import * as config from './config'
+import * as gpt3 from './gpt3'
 import { ActivityTrainingData } from './types'
-
-fetchMock.enableMocks()
 
 const trainingData = [
   ['fruit smoothie', 'fruit:desc smoothie:desc'],
@@ -56,4 +54,10 @@ test('predicts using GPT3 successfully', async () => {
   const opts = gpt3.prepareOptions(trainingData, activityInput)
   const res = await gpt3.predict(opts)
   expect(res).toEqual(outputText)
+})
+
+test('tokenizes GPT3 output', async () => {
+  const outputText = '12oz:size chicken:desc salad:desc'
+  const tokens = gpt3.tokenizeOutput(outputText)
+  expect(tokens).toEqual([['12oz', 'size'], ['chicken', 'desc'], ['salad', 'desc']])
 })

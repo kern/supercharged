@@ -1,5 +1,6 @@
-import { ActivityTrainingData, ActivityInput, GPT3Options } from './types'
+import { ActivityTrainingData, ActivityInput, GPT3Options, OutputTokens } from './types'
 import * as config from './config'
+import fetch from 'node-fetch'
 
 const prepareOptions = (trainingData: ActivityTrainingData, input: ActivityInput): GPT3Options => {
   const prompt = trainingData.concat([[input.text, '']]).map(([q, a]) => {
@@ -24,13 +25,13 @@ const predict = async (opts: GPT3Options): Promise<string> => {
 
   const body = await res.json()
   if (!body || !body.choices || body.choices.length === 0) {
-    throw new Error('invalid GPT3 output')
+    throw new Error('invalid GPT3 output: ' + res.status)
   }
 
   return body.choices[0].text
 }
 
-const tokenizeOutput = (rawOutput: string): Array<[string, string]> => {
+const tokenizeOutput = (rawOutput: string): OutputTokens => {
   return (
     rawOutput
       .split(/\s+/g)

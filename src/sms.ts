@@ -1,6 +1,22 @@
 import { TwilioPayload, ActivityInput } from './types'
 
-const processSMS = (payload: TwilioPayload): ActivityInput[] => {
+const validatePayload = (body: any): boolean => {
+  if (typeof body !== 'object') {
+    return false
+  }
+
+  if (typeof body.Body !== 'string') {
+    return false
+  }
+
+  if (!['undefined', 'string'].includes(typeof body.MediaUrl0)) {
+    return false
+  }
+
+  return true
+}
+
+const parseSMS = (payload: TwilioPayload): ActivityInput[] => {
   const lines =
     payload.Body
       .split('\n')
@@ -10,9 +26,9 @@ const processSMS = (payload: TwilioPayload): ActivityInput[] => {
   return lines.map((l: string) => {
     return {
       text: l,
-      imageURL: payload.MediaUrl0,
+      mediaURL: payload.MediaUrl0,
     }
   })
 }
 
-export { processSMS }
+export { validatePayload, parseSMS }
