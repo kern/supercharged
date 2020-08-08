@@ -31,7 +31,8 @@ If the model makes a mistake, you can train it to learn what you mean. Update th
 ```shell
 npm install
 npm test
-npm build
+npm run build
+npm run start
 ```
 
 ## License
