@@ -1,4 +1,6 @@
-# supercharged
+# *Supercharged!*
+
+<img width="480px" align="right" src="resources/screenshot.png" alt="Supercharged data in Airtable" />
 
 Natural language activity tracking with GPT-3
 
