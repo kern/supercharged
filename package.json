@@ -2,7 +2,7 @@
   "name": "supercharged",
   "version": "1.0.0",
   "description": "Natural language activity tracking with GPT-3",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
