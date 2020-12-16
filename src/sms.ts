@@ -17,18 +17,17 @@ const validatePayload = (body: any): boolean => {
 }
 
 const parseSMS = (payload: TwilioPayload): ActivityInput[] => {
-  const lines =
+  const text =
     payload.Body
       .split('\n')
       .map((l: string) => l.trim())
       .filter((l: string) => l.length > 0)
+      .join('. ')
 
-  return lines.map((l: string) => {
-    return {
-      text: l,
-      mediaURL: payload.MediaUrl0,
-    }
-  })
+  return [{
+    text,
+    mediaURL: payload.MediaUrl0,
+  }]
 }
 
 export { validatePayload, parseSMS }
