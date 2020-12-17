@@ -18,36 +18,27 @@ export type ActivityInput = {
   mediaURL?: string,
 }
 
-export type ActivityType = 'FOOD' | 'ENERGY' | 'EXERCISE'
-
 export type AirtableAttachments = Array<{ url: string }>
 
-export type AirtableFoodActivity = {
-  "Type": 'FOOD',
-  "Activity Date": string,
-  "Description": string,
-  "Meal Type": string,
-  "Count": number,
-  "Size": string,
-  "Location": string,
-  "Tags": string,
-  "Attachment URL"?: string,
-  "Attachments"?: AirtableAttachments,
+export type AirtableActivity = {
+  "Type"?: string | null,
+  "Activity Date"?: string | null,
+  "Description"?: string | null,
+  "Meal Type"?: string | null,
+  "Count"?: number | null,
+  "Size"?: string | null,
+  "Location"?: string | null,
+  "Energy"?: number | null,
+  "Feeling"?: number | null,
+  "Stress"?: number | null,
+  "Tags"?: string | null,
+  "Duration"?: string | null,
+  "Distance"?: string | null,
+  "Attachment URL"?: string | null,
+  "Attachments"?: AirtableAttachments | null,
+  "Original Text"?: string
+  "Received At"?: string
 }
-
-export type AirtableEnergyActivity = {
-  "Type": 'ENERGY',
-  "Attachment URL"?: string,
-  "Attachments"?: AirtableAttachments,
-}
-
-export type AirtableExerciseActivity = {
-  "Type": 'EXERCISE',
-  "Attachment URL"?: string,
-  "Attachments"?: AirtableAttachments,
-}
-
-export type AirtableActivity = AirtableFoodActivity | AirtableEnergyActivity | AirtableExerciseActivity
 
 export type AirtableErrorResponse = {
   error: {

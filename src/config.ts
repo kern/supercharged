@@ -15,7 +15,7 @@ const app = {
 }
 
 const gpt3 = {
-  endpoint: get('GPT3_ENDPOINT').default("https://api.openai.com/v1/engines/davinci/completions").asString(),
+  endpoint: get('GPT3_ENDPOINT').default("https://api.openai.com/v1/engines/curie/completions").asString(),
   apiKey: get('GPT3_KEY').required().asString(),
   defaultOpts: {
     max_tokens: 50,

@@ -1,4 +1,3 @@
-import { omit } from 'ramda'
 import fetch from 'node-fetch'
 import * as config from './config'
 import { AirtableActivity, ActivityTrainingData, AirtableErrorResponse } from './types'
@@ -25,8 +24,6 @@ const fetchTrainingData = async (): Promise<ActivityTrainingData> => {
 }
 
 const appendActivity = async (activity: AirtableActivity): Promise<void> => {
-  const fields = omit(['Type'], activity)
-
   const url = 'https://api.airtable.com/v0/' + config.airtable.base + '/' + encodeURIComponent(config.airtable.resultsTable)
   const res = await fetch(url, {
     method: 'POST',
@@ -34,7 +31,7 @@ const appendActivity = async (activity: AirtableActivity): Promise<void> => {
       'Authorization': `Bearer ${config.airtable.apiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ records: [{ fields }] })
+    body: JSON.stringify({ records: [{ fields: activity }] })
   })
 
   const body = await res.json()
