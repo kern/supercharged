@@ -51,7 +51,7 @@ const parseTokens = (tokens: OutputTokens): AirtableActivity[] => {
 
   // process all tokens in the message
   while (tokensLeft.length > 0) {
-    const nextToken = tokensLeft.shift()!
+    const nextToken = tokensLeft.shift() as [string, string]
     const [s, type] = nextToken
     switch (type) {
       case 'type':

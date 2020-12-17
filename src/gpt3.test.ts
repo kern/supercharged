@@ -36,18 +36,18 @@ test('predicts using GPT3 successfully', async () => {
 
   fetchMock.mockIf(config.gpt3.endpoint, async (req: Request) => {
     expect(req.method).toEqual('POST')
-    expect(req.headers.get('authorization')).toEqual('Bearer ' + config.gpt3.apiKey)
+    expect(req.headers.get('authorization')).toEqual(
+      'Bearer ' + config.gpt3.apiKey,
+    )
     expect(req.headers.get('content-type')).toEqual('application/json')
 
     const body = {
-      choices: [
-        { text: outputText }
-      ]
+      choices: [{ text: outputText }],
     }
 
     return {
       status: 200,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     }
   })
 
@@ -59,5 +59,9 @@ test('predicts using GPT3 successfully', async () => {
 test('tokenizes GPT3 output', async () => {
   const outputText = '12oz:size chicken:desc salad:desc'
   const tokens = gpt3.tokenizeOutput(outputText)
-  expect(tokens).toEqual([['12oz', 'size'], ['chicken', 'desc'], ['salad', 'desc']])
+  expect(tokens).toEqual([
+    ['12oz', 'size'],
+    ['chicken', 'desc'],
+    ['salad', 'desc'],
+  ])
 })

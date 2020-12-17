@@ -7,7 +7,7 @@ export const call = async (req: Request, res: Response): Promise<void> => {
   try {
     if (req.method !== 'POST') {
       res.send({
-        status: 405
+        status: 405,
       })
       return
     }
@@ -17,8 +17,8 @@ export const call = async (req: Request, res: Response): Promise<void> => {
       res.send({
         status: 400,
         error: {
-          message: 'invalid payload'
-        }
+          message: 'invalid payload',
+        },
       })
       return
     }

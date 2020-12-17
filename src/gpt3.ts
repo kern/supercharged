@@ -1,15 +1,27 @@
-import { ActivityTrainingData, ActivityInput, GPT3Options, OutputTokens } from './types'
+import {
+  ActivityTrainingData,
+  ActivityInput,
+  GPT3Options,
+  OutputTokens,
+} from './types'
 import * as config from './config'
 import fetch from 'node-fetch'
 
-const prepareOptions = (trainingData: ActivityTrainingData, input: ActivityInput): GPT3Options => {
-  const prompt = trainingData.concat([[input.text, '']]).map(([q, a]) => {
-    return 'Q: ' + q + '\nA: ' + a
-  }).join('\n\n').trim()
-  
+const prepareOptions = (
+  trainingData: ActivityTrainingData,
+  input: ActivityInput,
+): GPT3Options => {
+  const prompt = trainingData
+    .concat([[input.text, '']])
+    .map(([q, a]) => {
+      return 'Q: ' + q + '\nA: ' + a
+    })
+    .join('\n\n')
+    .trim()
+
   return {
     prompt,
-    ...config.gpt3.defaultOpts
+    ...config.gpt3.defaultOpts,
   }
 }
 
@@ -17,10 +29,10 @@ const predict = async (opts: GPT3Options): Promise<string> => {
   const res = await fetch(config.gpt3.endpoint, {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${config.gpt3.apiKey}`,
+      Authorization: `Bearer ${config.gpt3.apiKey}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(opts)
+    body: JSON.stringify(opts),
   })
 
   const body = await res.json()
@@ -32,17 +44,11 @@ const predict = async (opts: GPT3Options): Promise<string> => {
 }
 
 const tokenizeOutput = (rawOutput: string): OutputTokens => {
-  return (
-    rawOutput
-      .split(/\s+/g)
-      .map(s => s.trim())
-      .filter(s => s.length > 0)
-      .map(t => t.split(':'))
-  ) as Array<[string, string]>
+  return rawOutput
+    .split(/\s+/g)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0)
+    .map((t) => t.split(':')) as Array<[string, string]>
 }
 
-export {
-  prepareOptions,
-  predict,
-  tokenizeOutput,
-}
+export { prepareOptions, predict, tokenizeOutput }

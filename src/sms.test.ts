@@ -7,12 +7,14 @@ test('validates Twilio payloads', () => {
   expect(sms.validatePayload({ foo: 'bar' })).toEqual(false)
   expect(sms.validatePayload({ Body: 'bar' })).toEqual(true)
   expect(sms.validatePayload({ Body: 'bar', MediaUrl0: false })).toEqual(false)
-  expect(sms.validatePayload({ Body: 'bar', MediaUrl0: 'https://' })).toEqual(true)
+  expect(sms.validatePayload({ Body: 'bar', MediaUrl0: 'https://' })).toEqual(
+    true,
+  )
 })
 
 test('parses SMS', () => {
   const inputs = sms.parseSMS({
-    Body: 'fruit smoothie'
+    Body: 'fruit smoothie',
   })
 
   expect(inputs.length).toEqual(1)

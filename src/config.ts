@@ -11,11 +11,13 @@ switch (process.env.NODE_ENV) {
 }
 
 const app = {
-  timezone: get('ACTIVITY_TIMEZONE').default('America/Los_Angeles').asString()
+  timezone: get('ACTIVITY_TIMEZONE').default('America/Los_Angeles').asString(),
 }
 
 const gpt3 = {
-  endpoint: get('GPT3_ENDPOINT').default("https://api.openai.com/v1/engines/curie/completions").asString(),
+  endpoint: get('GPT3_ENDPOINT')
+    .default('https://api.openai.com/v1/engines/curie/completions')
+    .asString(),
   apiKey: get('GPT3_KEY').required().asString(),
   defaultOpts: {
     max_tokens: 50,
@@ -24,8 +26,8 @@ const gpt3 = {
     n: 1,
     stream: false,
     logprobs: null,
-    stop: '\n\n'
-  }
+    stop: '\n\n',
+  },
 }
 
 const airtable = {
@@ -35,8 +37,4 @@ const airtable = {
   apiKey: get('AIRTABLE_API_KEY').required().asString(),
 }
 
-export {
-  app,
-  gpt3,
-  airtable,
-}
+export { app, gpt3, airtable }
