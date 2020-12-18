@@ -167,6 +167,8 @@ const parseTokens = (tokens: OutputTokens): AirtableActivity[] => {
       } else {
         meal = 'dinner'
       }
+
+      activity['Meal Type'] = meal
     }
   }
 
